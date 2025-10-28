@@ -1,0 +1,39 @@
+KAFKA_CLUSTER_ID="$($KAFKA_HOME/bin/kafka-storage.sh random-uuid)"
+
+# Format all controller directories
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c lab1/solve2/controller-1.properties
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c lab1/solve2/controller-2.properties
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c lab1/solve2/controller-3.properties
+
+
+# Format all broker directories
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c lab1/solve2/broker-1.properties
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c lab1/solve2/broker-2.properties
+$KAFKA_HOME/bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c lab1/solve2/broker-3.properties
+
+
+$KAFKA_HOME/bin/kafka-topics.sh --create \
+  --topic MoviesWatched \
+  --bootstrap-server localhost:9096 \
+  --partitions 1 \
+  --replication-factor 1
+
+$KAFKA_HOME/bin/kafka-server-start.sh lab1/solve2/controller-1.properties
+$KAFKA_HOME/bin/kafka-server-start.sh lab1/solve2/controller-2.properties
+$KAFKA_HOME/bin/kafka-server-start.sh lab1/solve2/controller-3.properties
+
+$KAFKA_HOME/bin/kafka-server-start.sh lab1/solve2/broker-1.properties
+$KAFKA_HOME/bin/kafka-server-start.sh lab1/solve2/broker-2.properties
+$KAFKA_HOME/bin/kafka-server-start.sh lab1/solve2/broker-3.properties
+
+
+$KAFKA_HOME/bin/kafka-console-producer.sh \
+  --topic MoviesWatched \
+  --bootstrap-server localhost:9096
+
+
+$KAFKA_HOME/bin/kafka-console-consumer.sh \
+  --topic MoviesWatched \
+  --bootstrap-server localhost:9096 \
+  --from-beginning \
+  --group MyFirstGroup
