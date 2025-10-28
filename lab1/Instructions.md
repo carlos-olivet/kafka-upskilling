@@ -117,7 +117,7 @@ Now, type the following messages one by one and press Enter.
 {"MovieName": "Muppet's Christmas Carol", "Genre": "Christmas", "UserId":123435}
 ```
 
-## Step 5: Consume Messages (with a Group)
+# Step 5: Consume Messages (with a Group)
 
 This is the final piece. Let's read the data.
 
@@ -125,7 +125,7 @@ Terminal 4: Consumer Terminal
 
 Open a new terminal.
 
-# Terminal 4
+## Terminal 4
 ```shell
 $KAFKA_HOME/bin/kafka-console-consumer.sh \
   --topic MoviesWatched \
@@ -148,7 +148,7 @@ In Terminal 4 (the consumer), press Ctrl+C to stop it.
 
 Now, re-run the exact same command:
 
-# Terminal 4 (run this again)
+## Terminal 4 (run this again)
 ```shell
 $KAFKA_HOME/bin/kafka-console-consumer.sh \
   --topic MoviesWatched \
